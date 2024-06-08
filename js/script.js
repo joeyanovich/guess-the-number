@@ -1,6 +1,8 @@
+const btnTry = document.querySelector("#btnTry")
+const btnReset = document.querySelector("#btnReset")
 const screen1 = document.querySelector(".screen1")
 const screen2 = document.querySelector(".screen2")
-const randomNumber = Math.round(Math.random() * 10)
+let randomNumber = Math.round(Math.random() * 10)
 
 let xAttempts = 1
 
@@ -14,21 +16,26 @@ function handleTryClick(event) {
     screen2.classList.remove('hide')
     document.querySelector(".screen2 h2").innerText = `Acertou em ${xAttempts} tentativa(s)`
   }
-  console.log(inputNumber.value);
-  console.log(xAttempts);
-  console.log(randomNumber);
+  // console.log(inputNumber.value);
+  // console.log(xAttempts);
+  // console.log(randomNumber);
 
   inputNumber.value = ""
   xAttempts++
+  randomNumber = Math.round(Math.random() * 10)
 }
 
-const btnTry = document.querySelector("#btnTry")
-const btnReset = document.querySelector("#btnReset")
-
-btnTry.addEventListener('click', handleTryClick);
-btnReset.addEventListener('click', function() {
+function handleResetClick() {
   screen1.classList.remove('hide')
   screen2.classList.add('hide')
 
   xAttempts = 1
-});
+}
+
+btnTry.addEventListener('click', handleTryClick);
+btnReset.addEventListener('click', handleResetClick);
+document.addEventListener('keydown', function(e) {
+  if (e.key == 'Enter' && screen1.classList.contains('hide')) {
+    handleResetClick()
+  }
+})
